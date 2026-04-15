@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:time_viewer/services/world_time.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -12,6 +13,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     debugPrint('Printing from initState');
+    WorldTime('Asia/Manila').fetchData();
   }
 
   @override
