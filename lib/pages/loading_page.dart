@@ -19,7 +19,12 @@ class _LoadingPageState extends State<LoadingPage> {
     //Prevent the Async Gap - GUARD: Checks if the user is still on this screen
     if (!mounted) return;
 
-    //value of WorldTime passed to HomePage Route.
+    // value of WorldTime passed to HomePage Route
+    // The Sample value of the instance:
+    // date time: 2026-04-15T22:11:59.124805+08:00
+    // day of week: Wednesday
+    // timezone: Asia/Manila
+    // offset: 28800
     Navigator.pushReplacementNamed(
       (context),
       '/home',
@@ -27,8 +32,9 @@ class _LoadingPageState extends State<LoadingPage> {
         'location': instance.location,
         'flag': instance.flag,
         'timezone': instance.timezone,
-        'time': instance.time,
+        'time': instance.dateTime,
         'day': instance.dayOfWeek,
+        'offset': instance.utcOffsetSeconds,
       },
     );
   }
@@ -36,7 +42,6 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
-    debugPrint('Printing from initState');
     getTime();
   }
 
