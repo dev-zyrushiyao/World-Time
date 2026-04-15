@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:time_viewer/services/world_time.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,18 +8,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    debugPrint('Printing from initState');
-    WorldTime('Asia/Manila').fetchData();
-  }
+  Map data = {};
 
   @override
   Widget build(BuildContext context) {
+    data = data.isNotEmpty
+        ? data
+        : ModalRoute.of(context)!.settings.arguments as Map;
+
+    debugPrint('$data');
+
     return Scaffold(
       body: SafeArea(
-        child: SizedBox(child: Center(child: Text('This is homePage'))),
+        child: SizedBox(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(style: TextStyle(fontSize: 20), '${data['day']}'),
+                Text(style: TextStyle(fontSize: 80), '${data['time']}'),
+                Text(style: TextStyle(fontSize: 15), '${data['timezone']}'),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
