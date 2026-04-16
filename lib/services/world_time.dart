@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class WorldTime {
   //For constructor
@@ -12,6 +13,7 @@ class WorldTime {
   String? dateTime;
   String? dayOfWeek;
   int? utcOffsetSeconds;
+  String? displayTime; //AM PM Converted
 
   //constructor
   WorldTime(this.location, this.flag, this.timezone);
@@ -48,6 +50,13 @@ class WorldTime {
       dateTime = dataMap['date_time'];
       dayOfWeek = dataMap['day_of_week'];
       utcOffsetSeconds = dataMap['utc_offset_seconds'];
+
+      //dateTime(String) converts to clockTime(DateTime)
+      //clockTime calibrates using the utcOffsetSeconds
+      //clockTime is converted to AM/PM Format then passed the value to String displayTime for UI Display
+      DateTime clockTime = DateTime.parse(dateTime!);
+      clockTime = clockTime.add(Duration(seconds: utcOffsetSeconds!));
+      displayTime = DateFormat.jm().format(clockTime);
     } catch (e, s) {
       debugPrintStack(stackTrace: s);
 

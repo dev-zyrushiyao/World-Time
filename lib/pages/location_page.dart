@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ChangeLocationPage extends StatelessWidget {
-  const ChangeLocationPage({super.key});
+class LocationPage extends StatelessWidget {
+  const LocationPage({super.key});
 
   @override
   Widget build(BuildContext context) {

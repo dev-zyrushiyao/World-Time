@@ -15,28 +15,27 @@ class _HomePageState extends State<HomePage> {
 
   //timer to refresh time
   Timer? timer;
+  DateTime? clockTime;
+  String? time;
 
-  void startClock(Map<dynamic, dynamic> data) {
-    //Duplicate the value of raw date-time from API as DateTime Type then add 1 second duration for every refresh of page
-    //Periodic timer triggers the setState to refresh the page every second
-    //Original value of data['time'] is replaced with the duplicate time that updates 1 second every refresh.
-    DateTime convertedTime = DateTime.parse(data['dateTime']);
+  void startClock() {
+    //prevents creating a new timer if a timer already exist else skip this method.
+    if (timer != null) return;
+
+    /*timer increase the duration of clockTime by 1 second then converts value to AM/PM and passed to display variabl
+     every refresh of the page/state */
+    //1.the value of clockTime will overrite to dateTime
+    //2.the latest value of dateTime will overrite the value of displayTime
+    //3.displayTime appears in the UI while dateTime is for conversion
+    //4.this algorithm is just to prevent the display of Raw Data in the UI before converts to AM/PM Format
+    clockTime = DateTime.parse(data['dateTime']);
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
-        convertedTime = convertedTime.add(Duration(seconds: 1));
-        data['dateTime'] = convertedTime.toString();
+        clockTime = clockTime!.add(Duration(seconds: 1));
+        data['dateTime'] = DateFormat.jm().format(clockTime!);
+        data['displayTime'] = data['dateTime'];
       });
     });
-  }
-
-  void convertTime(Map<dynamic, dynamic> data) {
-    //convert the time to AM/PM Formatt (converted using DartFormat from Intl.dart dependency)
-    DateTime convertedTime = DateTime.parse(data['dateTime']);
-    convertedTime = convertedTime.add(
-      Duration(seconds: data['utcOffsetSeconds']),
-    );
-    String formattedTime = DateFormat.jm().format(convertedTime);
-    data['dateTime'] = formattedTime;
   }
 
   @override
@@ -46,8 +45,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    super.dispose();
     timer!.cancel();
+    debugPrint('Left the page');
+    super.dispose();
   }
 
   @override
@@ -57,14 +57,9 @@ class _HomePageState extends State<HomePage> {
       data = ModalRoute.of(context)!.settings.arguments as Map;
     } else {
       data = data;
-
-      debugPrint('Data is not empty');
     }
 
-    //set dynamic timer
-    startClock(data);
-    //convert the dynamic timer to AM/PM format to present in the UI.
-    convertTime(data);
+    startClock();
 
     return Scaffold(
       body: SafeArea(
@@ -74,7 +69,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(style: TextStyle(fontSize: 20), '${data['dayOfWeek']}'),
-                Text(style: TextStyle(fontSize: 80), '${data['dateTime']}'),
+                Text(style: TextStyle(fontSize: 80), '${data['displayTime']}'),
                 Text(style: TextStyle(fontSize: 15), '${data['timezone']}'),
 
                 Container(

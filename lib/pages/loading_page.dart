@@ -25,6 +25,7 @@ class _LoadingPageState extends State<LoadingPage> {
     // day of week: Wednesday
     // timezone: Asia/Manila
     // offset: 28800
+    // displayTime: 8:00PM
     Navigator.pushReplacementNamed(
       (context),
       '/home',
@@ -32,9 +33,11 @@ class _LoadingPageState extends State<LoadingPage> {
         'location': instance.location,
         'flag': instance.flag,
         'timezone': instance.timezone,
-        'dateTime': instance.dateTime,
+        'dateTime': instance
+            .dateTime, // Raw Data to convert -> to later passed to displayTime when it updates every second
         'dayOfWeek': instance.dayOfWeek,
         'utcOffsetSeconds': instance.utcOffsetSeconds,
+        'displayTime': instance.displayTime, // initial data for display
       },
     );
   }
