@@ -32,9 +32,9 @@ class _LoadingPageState extends State<LoadingPage> {
         'location': instance.location,
         'flag': instance.flag,
         'timezone': instance.timezone,
-        'time': instance.dateTime,
-        'day': instance.dayOfWeek,
-        'offset': instance.utcOffsetSeconds,
+        'dateTime': instance.dateTime,
+        'dayOfWeek': instance.dayOfWeek,
+        'utcOffsetSeconds': instance.utcOffsetSeconds,
       },
     );
   }

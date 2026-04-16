@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_viewer/pages/home_page.dart';
 import 'package:time_viewer/pages/loading_page.dart';
+import 'package:time_viewer/pages/change_location_Page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home': (contex) => HomePage(),
         '/loading': (contex) => LoadingPage(),
+        '/changelocation': (context) => ChangeLocationPage(),
       },
     );
   }
