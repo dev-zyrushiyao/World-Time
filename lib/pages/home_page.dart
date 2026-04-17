@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   //timer to refresh time
   Timer? timer;
   DateTime? clockTime;
-  String? time;
 
   void startClock() {
     //prevents creating a new timer if a timer already exist else skip this method.
@@ -45,8 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    timer!.cancel();
-    debugPrint('Left the page');
+    timer?.cancel();
     super.dispose();
   }
 
@@ -59,6 +57,7 @@ class _HomePageState extends State<HomePage> {
       data = data;
     }
 
+    //find a way to move this to init state
     startClock();
 
     return Scaffold(
@@ -73,12 +72,12 @@ class _HomePageState extends State<HomePage> {
                 Text(style: TextStyle(fontSize: 15), '${data['timezone']}'),
 
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: FilledButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, '/changelocation');
+                      Navigator.popAndPushNamed(context, '/changelocation');
                     },
-                    child: Text('Change Timezone'),
+                    child: const Text('Change Timezone'),
                   ),
                 ),
               ],

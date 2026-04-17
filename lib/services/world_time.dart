@@ -52,10 +52,11 @@ class WorldTime {
       utcOffsetSeconds = dataMap['utc_offset_seconds'];
 
       //dateTime(String) converts to clockTime(DateTime)
-      //clockTime calibrates using the utcOffsetSeconds
+      //clockTime calibrates using the utcOffsetSeconds for dateTime and clockTime
       //clockTime is converted to AM/PM Format then passed the value to String displayTime for UI Display
       DateTime clockTime = DateTime.parse(dateTime!);
       clockTime = clockTime.add(Duration(seconds: utcOffsetSeconds!));
+      dateTime = clockTime.toString();
       displayTime = DateFormat.jm().format(clockTime);
     } catch (e, s) {
       debugPrintStack(stackTrace: s);

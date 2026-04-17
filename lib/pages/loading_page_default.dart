@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:time_viewer/services/world_time.dart';
 
-class LoadingPage extends StatefulWidget {
-  const LoadingPage({super.key});
+class LoadingPageDefault extends StatefulWidget {
+  const LoadingPageDefault({super.key});
 
   @override
-  State<LoadingPage> createState() => _LoadingPageState();
+  State<LoadingPageDefault> createState() => _LoadingPageDefaultState();
 }
 
-class _LoadingPageState extends State<LoadingPage> {
+class _LoadingPageDefaultState extends State<LoadingPageDefault> {
   final String time = 'Loading';
 
   Map data = {};
 
   void getTime() async {
+    //returning a default value; this page loads once.
     WorldTime instance = WorldTime(
-      data['location'],
-      data['flag'],
-      data['timezone'],
+      data['location'] = 'Philippines',
+      data['flag'] = 'flagph',
+      data['timezone'] = 'Asia/Manila',
     );
 
     await instance.fetchData();
-
-    debugPrint('LOADING SCREEN: used a non-default value');
-    debugPrint('Data of location: ${data['location']}');
 
     //Prevent the Async Gap - GUARD: Checks if the user is still on this screen
     if (!mounted) return;
@@ -54,15 +52,16 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   void initState() {
     super.initState();
+    getTime();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (data.isEmpty) {
-      data = ModalRoute.of(context)?.settings.arguments as Map;
-      getTime();
-    }
-
     return Scaffold(body: SafeArea(child: Text('Loading....')));
   }
 }
