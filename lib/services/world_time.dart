@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class WorldTime {
   //For constructor
   String location;
-  String flag;
+  String? flag;
   String timezone;
 
   //Value Generated when the fetchData() is invoked after creating a data through constructor

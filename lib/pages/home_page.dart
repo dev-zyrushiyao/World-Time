@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.all(20),
                   child: FilledButton(
                     onPressed: () {
-                      Navigator.popAndPushNamed(context, '/changelocation');
+                      Navigator.pushNamed(context, '/changelocation');
                     },
                     child: const Text('Change Timezone'),
                   ),
