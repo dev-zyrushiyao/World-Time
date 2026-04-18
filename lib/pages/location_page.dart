@@ -9,6 +9,7 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+  //list of widget that contains WorldTime object
   List locationList = [];
 
   void addCountry() {
@@ -19,6 +20,8 @@ class _LocationPageState extends State<LocationPage> {
       WorldTime('Thailand', 'Thai.png', 'Asia/Bangkok'),
     ];
 
+    /* loopling the list of countries then puts that object of contry as a widget into a new list 
+    that will be displayed in UI */
     for (var item in countries) {
       locationList.add(listButton(item));
     }
@@ -33,8 +36,17 @@ class _LocationPageState extends State<LocationPage> {
         errorBuilder: (context, error, stackTrace) =>
             Image.asset('assets/default.jpg'),
       ),
-
-      onTap: () => debugPrint('A button from the List is pressed'),
+      onTap: () {
+        Navigator.pushReplacementNamed(
+          (context),
+          '/loading',
+          arguments: {
+            'location': item.location,
+            'flag': item.flag,
+            'timezone': item.timezone,
+          },
+        );
+      },
     );
   }
 
@@ -70,9 +82,3 @@ class _LocationPageState extends State<LocationPage> {
     );
   }
 }
-
-// Navigator.pushReplacementNamed(
-//           (context),
-//           '/loading',
-//           arguments: {'location': location, 'flag': flag, 'timezone': timezone},
-//           debugPrint('Pressed from Location Page Button');

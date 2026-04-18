@@ -33,7 +33,7 @@ class _LoadingPageDefaultState extends State<LoadingPageDefault> {
     // timezone: Asia/Manila
     // offset: 28800
     // displayTime: 8:00PM
-    Navigator.popAndPushNamed(
+    Navigator.pushReplacementNamed(
       (context),
       '/home',
       arguments: {

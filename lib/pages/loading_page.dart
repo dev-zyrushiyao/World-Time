@@ -22,9 +22,6 @@ class _LoadingPageState extends State<LoadingPage> {
 
     await instance.fetchData();
 
-    debugPrint('LOADING SCREEN: used a non-default value');
-    debugPrint('Data of location: ${data['location']}');
-
     //Prevent the Async Gap - GUARD: Checks if the user is still on this screen
     if (!mounted) return;
 
@@ -35,7 +32,7 @@ class _LoadingPageState extends State<LoadingPage> {
     // timezone: Asia/Manila
     // offset: 28800
     // displayTime: 8:00PM
-    Navigator.popAndPushNamed(
+    Navigator.pushReplacementNamed(
       (context),
       '/home',
       arguments: {
